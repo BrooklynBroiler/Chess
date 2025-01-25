@@ -20,6 +20,7 @@ public class ChessPiece {
         this.pieceType = type;
         calculatorMap = new HashMap<>();
         calculatorMap.put(ChessPiece.PieceType.KING, new KingMovesCalculator());
+        calculatorMap.put(ChessPiece.PieceType.KNIGHT, new KnightMovesCalculator());
     }
 
     /**

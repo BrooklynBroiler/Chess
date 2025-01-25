@@ -27,10 +27,7 @@ public class KingMovesCalculator implements PieceMovesCalculator {
             return false;
         }
         else if (board.getPiece(move.endPosition) != null ) {
-            if(board.getPiece(move.endPosition).pieceColor.equals(board.getPiece(move.startPosition).pieceColor)) {
-                return false;
-            }
-            return true;
+            return !board.getPiece(move.endPosition).pieceColor.equals(board.getPiece(move.startPosition).pieceColor);
         }
         return true;
     }

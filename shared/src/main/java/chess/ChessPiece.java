@@ -21,6 +21,7 @@ public class ChessPiece {
         calculatorMap = new HashMap<>();
         calculatorMap.put(ChessPiece.PieceType.KING, new KingMovesCalculator());
         calculatorMap.put(ChessPiece.PieceType.KNIGHT, new KnightMovesCalculator());
+        calculatorMap.put(ChessPiece.PieceType.ROOK, new RookMovesCalculator());
     }
 
     /**

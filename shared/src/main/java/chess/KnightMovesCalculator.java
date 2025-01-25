@@ -19,7 +19,7 @@ public class KnightMovesCalculator implements PieceMovesCalculator{
             int nRow = myPosition.getRow() + move[0];
             int nColumn = myPosition.getColumn() + move[1];
             ChessPosition newPosition = new ChessPosition(nRow, nColumn);
-            ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.KING);
+            ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.KNIGHT);
             if (isValidMove(possibleMove, board)){
                 moves.add(possibleMove);
             }
@@ -33,10 +33,7 @@ public class KnightMovesCalculator implements PieceMovesCalculator{
             return false;
         }
         else if (board.getPiece(move.endPosition) != null ) {
-            if(board.getPiece(move.endPosition).pieceColor.equals(board.getPiece(move.startPosition).pieceColor)) {
-                return false;
-            }
-            return true;
+            return !board.getPiece(move.endPosition).pieceColor.equals(board.getPiece(move.startPosition).pieceColor);
         }
         return true;
     }

@@ -1,6 +1,8 @@
 package chess;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -12,9 +14,12 @@ import java.util.Objects;
 public class ChessPiece {
     ChessGame.TeamColor pieceColor;
     ChessPiece.PieceType pieceType;
+    Map<ChessPiece.PieceType, PieceMovesCalculator> calculatorMap;
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
         this.pieceColor = pieceColor;
         this.pieceType = type;
+        calculatorMap = new HashMap<>();
+        calculatorMap.put(ChessPiece.PieceType.KING, new KingMovesCalculator());
     }
 
     /**
@@ -53,7 +58,7 @@ public class ChessPiece {
      * @return Collection of valid moves
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
-        return new java.util.ArrayList<>();
+        return calculatorMap.get(board.getPiece(myPosition).pieceType).pieceMoves(board, myPosition);
     }
 
     @Override

@@ -15,10 +15,10 @@ public class BishopMovesCalculator implements PieceMovesCalculator{
         ChessPosition bottomLeftBox = new ChessPosition(myPosition.getRow() - 1,myPosition.getColumn() - 1);
         ChessPosition bottomRightBox = new ChessPosition( myPosition.getRow() + 1,myPosition.getColumn() - 1);
 
-        ChessMove oneMoveTopRight = new ChessMove(myPosition, topRightBox, ChessPiece.PieceType.ROOK);
-        ChessMove oneMoveTopLeft = new ChessMove(myPosition, topLeftBox, ChessPiece.PieceType.ROOK);
-        ChessMove oneMoveBottomLeft= new ChessMove(myPosition, bottomLeftBox, ChessPiece.PieceType.ROOK);
-        ChessMove oneMoveBottomRight= new ChessMove(myPosition, bottomRightBox, ChessPiece.PieceType.ROOK);
+        ChessMove oneMoveTopRight = new ChessMove(myPosition, topRightBox, ChessPiece.PieceType.BISHOP);
+        ChessMove oneMoveTopLeft = new ChessMove(myPosition, topLeftBox, ChessPiece.PieceType.BISHOP);
+        ChessMove oneMoveBottomLeft= new ChessMove(myPosition, bottomLeftBox, ChessPiece.PieceType.BISHOP);
+        ChessMove oneMoveBottomRight= new ChessMove(myPosition, bottomRightBox, ChessPiece.PieceType.BISHOP);
 
 
         addMovesTopRightLine(2,oneMoveTopRight, board, moves);
@@ -42,7 +42,7 @@ public class BishopMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow() + counter, move.startPosition.getColumn() + counter);
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.BISHOP);
             moves.add(move);
             return addMovesTopRightLine(counter + 1, nextPossibleMove, board, moves);
         }
@@ -62,7 +62,7 @@ public class BishopMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow() - counter, move.startPosition.getColumn() + counter);
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.BISHOP);
             moves.add(move);
             return addMovesTopLeftLine(counter + 1, nextPossibleMove, board, moves);
         }
@@ -82,7 +82,7 @@ public class BishopMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow() - counter, move.startPosition.getColumn() - counter);
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.BISHOP);
             moves.add(move);
             return addMovesBottomLeftLine(counter + 1, nextPossibleMove, board, moves);
         }
@@ -102,7 +102,7 @@ public class BishopMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow() + counter, move.startPosition.getColumn() - counter);
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.BISHOP);
             moves.add(move);
             return addMovesBottomRightLine(counter + 1, nextPossibleMove, board, moves);
         }

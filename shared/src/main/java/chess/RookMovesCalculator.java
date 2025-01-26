@@ -20,9 +20,6 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         ChessPosition downCol = new ChessPosition(myPosition.getRow(),myPosition.getColumn() - 1);
         ChessPosition upCol = new ChessPosition( myPosition.getRow(),myPosition.getColumn() + 1);
 
-        /**
-         * Adding the right moves
-         */
         ChessMove oneMoveRight = new ChessMove(myPosition, rightRow, ChessPiece.PieceType.ROOK);
         ChessMove oneMoveLeft = new ChessMove(myPosition, leftRow, ChessPiece.PieceType.ROOK);
         ChessMove oneMoveUp = new ChessMove(myPosition, upCol, ChessPiece.PieceType.ROOK);

@@ -22,6 +22,7 @@ public class ChessPiece {
         calculatorMap.put(ChessPiece.PieceType.KING, new KingMovesCalculator());
         calculatorMap.put(ChessPiece.PieceType.KNIGHT, new KnightMovesCalculator());
         calculatorMap.put(ChessPiece.PieceType.ROOK, new RookMovesCalculator());
+        calculatorMap.put(ChessPiece.PieceType.BISHOP, new BishopMovesCalculator());
     }
 
     /**

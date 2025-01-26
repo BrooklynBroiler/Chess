@@ -33,39 +33,18 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         addMovesUp(2,oneMoveUp, board, moves);
         addMovesDown(2, oneMoveDown, board, moves);
 
-//        while(board.getPiece(rightRow) == null && counter < 8) {
-//             int nRow = rightRow.getRow() + counter - 1;
-//            ChessPosition newPosition = new ChessPosition(nRow, myPosition.getColumn());
-//            ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.ROOK);
-//            if (isValidMove(possibleMove, board)){
-//                moves.add(possibleMove);
-//            }
-//            else {
-//                counter = 1;
-//                break;
-//            }
-//            counter++;
-//        }
-        /**
-         * Adding the left moves
-         */
-
-
-        /**
-         * Add all the column moves going down
-         */
-
-        /**
-         * Add all the column moves going up
-         */
-
         return moves;
     }
     private Collection<ChessMove> addMovesRight(int counter, ChessMove move, ChessBoard board, Collection<ChessMove> moves){
-        if(!isValidMove(move, board)){
-            if(capturedPiece(move, board)){
-                moves.add(move);
-            }
+        if (move.endPosition.getRow() < 1 || move.endPosition.getRow() > 8 ||
+                move.endPosition.getColumn() < 1 || move.endPosition.getColumn() > 8) {
+            return moves; // Stop recursion if out of bounds
+        }
+        else if(capturedPiece(move, board)){
+            moves.add(move);
+            return moves;
+        }
+        else if (board.getPiece(move.endPosition)!= null && !capturedPiece(move, board)) {
             return moves;
         }
         else{
@@ -77,10 +56,15 @@ public class RookMovesCalculator implements PieceMovesCalculator{
     }
 
     private Collection<ChessMove> addMovesLeft(int counter, ChessMove move, ChessBoard board, Collection<ChessMove> moves){
-        if(!isValidMove(move, board)){
-            if(capturedPiece(move, board)){
-                moves.add(move);
-            }
+        if (move.endPosition.getRow() < 1 || move.endPosition.getRow() > 8 ||
+                move.endPosition.getColumn() < 1 || move.endPosition.getColumn() > 8) {
+            return moves; // Stop recursion if out of bounds
+        }
+        else if(capturedPiece(move, board)){
+            moves.add(move);
+            return moves;
+        }
+        else if (board.getPiece(move.endPosition)!= null && !capturedPiece(move, board)) {
             return moves;
         }
         else{
@@ -92,10 +76,15 @@ public class RookMovesCalculator implements PieceMovesCalculator{
     }
 
     private Collection<ChessMove> addMovesUp(int counter, ChessMove move, ChessBoard board, Collection<ChessMove> moves){
-        if(!isValidMove(move, board)){
-            if(capturedPiece(move, board)){
-                moves.add(move);
-            }
+        if (move.endPosition.getRow() < 1 || move.endPosition.getRow() > 8 ||
+                move.endPosition.getColumn() < 1 || move.endPosition.getColumn() > 8) {
+            return moves; // Stop recursion if out of bounds
+        }
+        else if(capturedPiece(move, board)){
+            moves.add(move);
+            return moves;
+        }
+        else if (board.getPiece(move.endPosition)!= null && !capturedPiece(move, board)) {
             return moves;
         }
         else{
@@ -107,10 +96,15 @@ public class RookMovesCalculator implements PieceMovesCalculator{
     }
 
     private Collection<ChessMove> addMovesDown(int counter, ChessMove move, ChessBoard board, Collection<ChessMove> moves){
-        if(!isValidMove(move, board)){
-            if(capturedPiece(move, board)){
+        if (move.endPosition.getRow() < 1 || move.endPosition.getRow() > 8 ||
+                move.endPosition.getColumn() < 1 || move.endPosition.getColumn() > 8) {
+            return moves; // Stop recursion if out of bounds
+        }
+        else if(capturedPiece(move, board)){
                 moves.add(move);
+                return moves;
             }
+        else if (board.getPiece(move.endPosition)!= null && !capturedPiece(move, board)) {
             return moves;
         }
         else{

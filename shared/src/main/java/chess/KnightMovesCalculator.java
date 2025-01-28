@@ -19,7 +19,7 @@ public class KnightMovesCalculator implements PieceMovesCalculator{
             int nRow = myPosition.getRow() + move[0];
             int nColumn = myPosition.getColumn() + move[1];
             ChessPosition newPosition = new ChessPosition(nRow, nColumn);
-            ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.KNIGHT);
+            ChessMove possibleMove = new ChessMove(myPosition, newPosition, null);
             if (isValidMove(possibleMove, board)){
                 moves.add(possibleMove);
             }

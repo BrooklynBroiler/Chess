@@ -13,8 +13,7 @@ public class ChessMove {
     ChessPosition endPosition;
     ChessPiece.PieceType promotionPiece;
 
-    public ChessMove(ChessPosition startPosition, ChessPosition endPosition,
-                     ChessPiece.PieceType promotionPiece) {
+    public ChessMove(ChessPosition startPosition, ChessPosition endPosition, ChessPiece.PieceType promotionPiece) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
         this.promotionPiece = promotionPiece;
@@ -41,9 +40,9 @@ public class ChessMove {
      * @return Type of piece to promote a pawn to, or null if no promotion
      */
     public ChessPiece.PieceType getPromotionPiece() {
-
-        return null;
+        return promotionPiece;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -61,5 +60,4 @@ public class ChessMove {
     public int hashCode() {
         return Objects.hash(startPosition, endPosition, promotionPiece);
     }
-
 }

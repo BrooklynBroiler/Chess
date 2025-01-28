@@ -20,10 +20,10 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         ChessPosition downCol = new ChessPosition(myPosition.getRow(),myPosition.getColumn() - 1);
         ChessPosition upCol = new ChessPosition( myPosition.getRow(),myPosition.getColumn() + 1);
 
-        ChessMove oneMoveRight = new ChessMove(myPosition, rightRow, ChessPiece.PieceType.ROOK);
-        ChessMove oneMoveLeft = new ChessMove(myPosition, leftRow, ChessPiece.PieceType.ROOK);
-        ChessMove oneMoveUp = new ChessMove(myPosition, upCol, ChessPiece.PieceType.ROOK);
-        ChessMove oneMoveDown = new ChessMove(myPosition, downCol, ChessPiece.PieceType.ROOK);
+        ChessMove oneMoveRight = new ChessMove(myPosition, rightRow, null);
+        ChessMove oneMoveLeft = new ChessMove(myPosition, leftRow, null);
+        ChessMove oneMoveUp = new ChessMove(myPosition, upCol, null);
+        ChessMove oneMoveDown = new ChessMove(myPosition, downCol, null);
 
         addMovesRight(2,oneMoveRight, board, moves);
         addMovesLeft(2,oneMoveLeft, board, moves);
@@ -46,7 +46,7 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow()+counter, move.startPosition.getColumn());
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, null);
             moves.add(move);
             return addMovesRight(counter + 1, nextPossibleMove, board, moves);
         }
@@ -66,7 +66,7 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow() - counter, move.startPosition.getColumn());
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, null);
             moves.add(move);
             return addMovesLeft(counter + 1, nextPossibleMove, board, moves);
         }
@@ -86,7 +86,7 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow(), move.startPosition.getColumn() + counter);
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, null);
             moves.add(move);
             return addMovesUp(counter + 1, nextPossibleMove, board, moves);
         }
@@ -106,7 +106,7 @@ public class RookMovesCalculator implements PieceMovesCalculator{
         }
         else{
             ChessPosition newPosition = new ChessPosition(move.startPosition.getRow(), move.startPosition.getColumn() - counter);
-            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, ChessPiece.PieceType.ROOK);
+            ChessMove nextPossibleMove = new ChessMove(move.startPosition, newPosition, null);
             moves.add(move);
             return addMovesDown(counter + 1, nextPossibleMove, board, moves);
         }

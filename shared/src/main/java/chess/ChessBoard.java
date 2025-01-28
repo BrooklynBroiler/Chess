@@ -41,7 +41,71 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        for (int row = 1; row < 9; row++) {
+            for (int column = 1; column < 9; column++) {
+                if (row == 2){
+                    ChessPosition whtPawnPosition = new ChessPosition(row, column);
+                    ChessPiece whtPawnPiece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN );
+                    addPiece(whtPawnPosition, whtPawnPiece);
+                }
+                else if (row == 7){
+                    ChessPosition blkPawnPosition = new ChessPosition(row, column);
+                    ChessPiece blkPawnPiece = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN );
+                    addPiece(blkPawnPosition, blkPawnPiece);
+                }
+                else if (row == 8 && (column == 1 || column == 8)){
+                    ChessPosition blkRookPosition = new ChessPosition(row, column);
+                    ChessPiece blkRookPiece = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK );
+                    addPiece(blkRookPosition, blkRookPiece);
+                }
+                else if (row == 1 && (column == 1 || column == 8)){
+                    ChessPosition whtRookPosition = new ChessPosition(row, column);
+                    ChessPiece whtRookPiece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK );
+                    addPiece(whtRookPosition, whtRookPiece);
+                }
+                else if (row == 8 && (column == 2 || column == 7)){
+                    ChessPosition blkKnightPosition = new ChessPosition(row, column);
+                    ChessPiece blkKnightPiece = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT );
+                    addPiece(blkKnightPosition, blkKnightPiece);
+                }
+                else if (row == 1 && (column == 2 || column == 7)){
+                    ChessPosition whtKnightPosition = new ChessPosition(row, column);
+                    ChessPiece whtKnightPiece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT );
+                    addPiece(whtKnightPosition, whtKnightPiece);
+                }
+                else if (row == 8 && (column == 3 || column == 6)){
+                    ChessPosition blkBishopPosition = new ChessPosition(row, column);
+                    ChessPiece blkBishopPiece = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP);
+                    addPiece(blkBishopPosition, blkBishopPiece);
+                }
+                else if (row == 1 && (column == 3 || column == 6)){
+                    ChessPosition whtBishopPosition = new ChessPosition(row, column);
+                    ChessPiece whtBishopPiece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP );
+                    addPiece(whtBishopPosition, whtBishopPiece);
+                }
+                else if (row == 8 && column == 4){
+                    ChessPosition blkQueenPosition = new ChessPosition(row, column);
+                    ChessPiece blkQueenPiece = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.QUEEN);
+                    addPiece(blkQueenPosition, blkQueenPiece);
+                }
+                else if (row == 1 && column == 4){
+                    ChessPosition whtQueenPosition = new ChessPosition(row, column);
+                    ChessPiece whtQueenPiece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.QUEEN );
+                    addPiece(whtQueenPosition, whtQueenPiece);
+                }
+                else if (row == 8){
+                    ChessPosition blkKingPosition = new ChessPosition(row, column);
+                    ChessPiece blkKingPiece = new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING);
+                    addPiece(blkKingPosition, blkKingPiece);
+                }
+                else if (row == 1){
+                    ChessPosition whtKingPosition = new ChessPosition(row, column);
+                    ChessPiece whtKingPiece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KING );
+                    addPiece(whtKingPosition, whtKingPiece);
+                }
+
+            }
+        }
     }
 
     @Override
@@ -60,4 +124,5 @@ public class ChessBoard {
     public int hashCode() {
         return Arrays.deepHashCode(squares);
     }
+
 }

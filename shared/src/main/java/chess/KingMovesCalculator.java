@@ -13,17 +13,18 @@ public class KingMovesCalculator implements PieceMovesCalculator {
             int nRow = myPosition.getRow() + move[0];
             int nColumn = myPosition.getColumn() + move[1];
             ChessPosition newPosition = new ChessPosition(nRow, nColumn);
-            ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.KING);
+            ChessMove possibleMove = new ChessMove(myPosition, newPosition, null);
             if (isValidMove(possibleMove, board)){
                 moves.add(possibleMove);
             }
         }
+
         return moves;
     }
 
     @Override
     public boolean isValidMove(ChessMove move, ChessBoard board) {
-        if (move.endPosition.getRow() < 0 || move.endPosition.getColumn() < 0 || move.endPosition.getRow() > 7 || move.endPosition.getColumn() > 7) {
+        if (move.endPosition.getRow() <= 0 || move.endPosition.getColumn() <= 0 || move.endPosition.getRow() > 7 || move.endPosition.getColumn() > 7) {
             return false;
         }
         else if (board.getPiece(move.endPosition) != null ) {

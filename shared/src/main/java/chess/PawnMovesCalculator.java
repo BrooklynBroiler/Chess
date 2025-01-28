@@ -30,7 +30,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
                 int nRow = myPosition.getRow() + move[0];
                 int nColumn = myPosition.getColumn() + move[1];
                 ChessPosition newPosition = new ChessPosition(nRow, nColumn);
-                ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.PAWN);
+                ChessMove possibleMove = new ChessMove(myPosition, newPosition, null);
                 if ( board.getPiece(newPosition) == null) {
                     if(possibleMove.endPosition.getRow() == 8){
                         promotionMoves(possibleMove, moves);
@@ -43,7 +43,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
             ChessPosition topRightBlock = new ChessPosition(myPosition.getRow() + 1, myPosition.getColumn() - 1);
             if(isinbounds(topLeftBlock) && board.getPiece(topLeftBlock) != null){
                 if (!board.getPiece(topLeftBlock).pieceColor.equals(ChessGame.TeamColor.WHITE)) {
-                    ChessMove newMove = new ChessMove(myPosition, topLeftBlock, ChessPiece.PieceType.PAWN);
+                    ChessMove newMove = new ChessMove(myPosition, topLeftBlock, null);
                     if (newMove.endPosition.getRow() == 8){
                         promotionMoves(newMove, moves);
                     }
@@ -53,7 +53,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
             }
             if(isinbounds(topRightBlock) && board.getPiece(topRightBlock) != null){
                 if (!board.getPiece(topRightBlock).pieceColor.equals(ChessGame.TeamColor.WHITE)) {
-                    ChessMove newMove = new ChessMove(myPosition, topRightBlock, ChessPiece.PieceType.PAWN);
+                    ChessMove newMove = new ChessMove(myPosition, topRightBlock, null);
                     if (newMove.endPosition.getRow() == 8){
                         promotionMoves(newMove, moves);
                     }
@@ -82,7 +82,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
                 int nRow = myPosition.getRow() - move[0];
                 int nColumn = myPosition.getColumn() - move[1];
                 ChessPosition newPosition = new ChessPosition(nRow, nColumn);
-                ChessMove possibleMove = new ChessMove(myPosition, newPosition, ChessPiece.PieceType.PAWN);
+                ChessMove possibleMove = new ChessMove(myPosition, newPosition, null);
                 if (board.getPiece(newPosition) == null) {
                     if(possibleMove.endPosition.getRow() == 1){
                         promotionMoves(possibleMove, moves);
@@ -95,7 +95,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
             ChessPosition BottomRightBlock = new ChessPosition(myPosition.getRow() - 1, myPosition.getColumn() + 1);
             if(isinbounds(BottomLeftBlock) && board.getPiece(BottomLeftBlock) != null){
                 if (!board.getPiece(BottomLeftBlock).pieceColor.equals(ChessGame.TeamColor.BLACK)) {
-                    ChessMove newMove = new ChessMove(myPosition, BottomLeftBlock, ChessPiece.PieceType.PAWN);
+                    ChessMove newMove = new ChessMove(myPosition, BottomLeftBlock, null);
                     if (newMove.endPosition.getRow() == 1){
                         promotionMoves(newMove, moves);
                     }
@@ -105,7 +105,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
             }
             if(isinbounds(BottomRightBlock) && board.getPiece(BottomRightBlock) != null){
                 if (!board.getPiece(BottomRightBlock).pieceColor.equals(ChessGame.TeamColor.BLACK)) {
-                    ChessMove newMove = new ChessMove(myPosition,BottomRightBlock, ChessPiece.PieceType.PAWN);
+                    ChessMove newMove = new ChessMove(myPosition,BottomRightBlock, null);
                     if (newMove.endPosition.getRow() == 1){
                         promotionMoves(newMove, moves);
                     }
@@ -120,13 +120,13 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
 
     @Override
     public boolean isValidMove(ChessMove move, ChessBoard board) {
-        if (move.endPosition.getRow() >= 0 && move.endPosition.getColumn() >= 0 && move.endPosition.getRow() <= 8 && move.endPosition.getColumn() <= 8) {
+        if (move.endPosition.getRow() > 0 && move.endPosition.getColumn() > 0 && move.endPosition.getRow() <= 8 && move.endPosition.getColumn() <= 8) {
             return true;
         }
         return false;
     }
     private boolean isinbounds(ChessPosition endPosition){
-        return endPosition.getRow() >= 0 && endPosition.getColumn() >= 0 && endPosition.getRow() <= 8 && endPosition.getColumn() <= 8;
+        return endPosition.getRow() > 0 && endPosition.getColumn() > 0 && endPosition.getRow() <= 8 && endPosition.getColumn() <= 8;
     }
     private void promotionMoves(ChessMove move, Collection<ChessMove> moves) {
         ChessPosition startPosition = move.getStartPosition();

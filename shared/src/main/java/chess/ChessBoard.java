@@ -11,7 +11,10 @@ public class ChessBoard {
     public ChessBoard() {
         
     }
-
+    public ChessBoard(ChessBoard board){
+        ChessBoard copyboard = new ChessBoard();
+        copyboard = board;
+    }
     /**
      * Adds a chess piece to the chessboard
      *

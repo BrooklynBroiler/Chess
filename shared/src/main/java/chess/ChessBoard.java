@@ -12,8 +12,15 @@ public class ChessBoard {
         
     }
     public ChessBoard(ChessBoard board){
-        ChessBoard copyboard = new ChessBoard();
-        copyboard = board;
+       for (int row = 1; row < 9; row++){
+           for (int col = 1; col < 9; col++){
+               ChessPosition position = new ChessPosition(row, col);
+               if (board.getPiece(position) != null){
+                   this.squares[row - 1][col - 1] = board.getPiece(position);
+               }
+           }
+       }
+
     }
     /**
      * Adds a chess piece to the chessboard

@@ -94,8 +94,18 @@ public class ChessGame {
             Collection<ChessMove> validMoves = validMoves(move.startPosition);
             if(validMoves.contains(move)){
                 ChessPiece piece = theBoard.getPiece(move.startPosition);
+                if (piece.pieceType.equals(ChessPiece.PieceType.PAWN) && (move.endPosition.getRow() == 1 || move.endPosition.getRow() == 8)){
+                     ChessPiece promotionPiece= new ChessPiece(piece.getTeamColor(), move.promotionPiece);
+                     theBoard.addPiece(move.endPosition, promotionPiece);
+                     theBoard.addPiece(move.startPosition, null);
+                     changeColor();
+                }
+                else{
                 theBoard.addPiece(move.endPosition, piece);
                 theBoard.addPiece(move.startPosition, null);
+                changeColor();
+                }
+
             }
             else{
                 throw new InvalidMoveException("invalid move");
@@ -123,17 +133,18 @@ public class ChessGame {
      * @return True if the specified team is in checkmate
      */
     public boolean isInCheckmate(TeamColor teamColor) {
-        Collection<ChessPosition> enemyEndPositions = enemyMoveEndPositions(teamColor, theBoard);
-        ChessPosition kingPosition= findKingPosition(teamColor, theBoard);
-        return enemyEndPositions.contains(kingPosition);
-
+        Collection<ChessMove> validMoves = new ArrayList<>();
         for (int row = 1; row < 9; row++) {
-            for (int column = 1; column < 9; column++){
+            for (int column = 1; column < 9; column++) {
                 ChessPosition newPosition = new ChessPosition(row, column);
                 if (theBoard.getPiece(newPosition) != null && theBoard.getPiece(newPosition).getTeamColor().equals(teamColor)){
-
+                    Collection<ChessMove> moves= validMoves(newPosition);
+                    validMoves.addAll(moves);
                 }
             }
+        }
+        return validMoves.isEmpty() && isInCheck(teamColor);
+
     }
 
     /**
@@ -144,7 +155,18 @@ public class ChessGame {
      * @return True if the specified team is in stalemate, otherwise false
      */
     public boolean isInStalemate(TeamColor teamColor) {
-        throw new RuntimeException("Not implemented");
+        Collection<ChessMove> validMoves = new ArrayList<>();
+        for (int row = 1; row < 9; row++) {
+            for (int column = 1; column < 9; column++) {
+                ChessPosition newPosition = new ChessPosition(row, column);
+                if (theBoard.getPiece(newPosition) != null && theBoard.getPiece(newPosition).getTeamColor().equals(teamColor)){
+                    Collection<ChessMove> moves= validMoves(newPosition);
+                    validMoves.addAll(moves);
+                }
+            }
+        }
+        return validMoves.isEmpty() && !isInCheck(teamColor);
+
     }
 
     /**
@@ -201,6 +223,14 @@ public class ChessGame {
         ChessPiece piece = board.getPiece(move.startPosition);
         board.addPiece(move.endPosition, piece);
         board.addPiece(move.startPosition, null);
+    }
+    public void changeColor(){
+        if (teamColor.equals(TeamColor.WHITE)){
+            teamColor = TeamColor.BLACK;
+        }
+        else{
+            teamColor = TeamColor.WHITE;
+        }
     }
 
 }

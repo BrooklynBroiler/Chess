@@ -128,7 +128,7 @@ public class PawnMovesCalculator implements PieceMovesCalculator {
     private boolean isinbounds(ChessPosition endPosition){
         return endPosition.getRow() > 0 && endPosition.getColumn() > 0 && endPosition.getRow() <= 8 && endPosition.getColumn() <= 8;
     }
-    private void promotionMoves(ChessMove move, Collection<ChessMove> moves) {
+    public void promotionMoves(ChessMove move, Collection<ChessMove> moves) {
         ChessPosition startPosition = move.getStartPosition();
         ChessPosition endPosition = move.getEndPosition();
         ChessMove QueenPromotion = new ChessMove(startPosition, endPosition, ChessPiece.PieceType.QUEEN);

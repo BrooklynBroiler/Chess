@@ -1,5 +1,7 @@
 import chess.*;
 import server.*;
+import service.ClearService;
+
 public class Main {
     public static void main(String[] args) {
         var piece = new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN);

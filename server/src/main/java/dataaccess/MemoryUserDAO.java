@@ -1,7 +1,9 @@
 package dataaccess;
 
+import model.UserModel;
+
 import java.util.HashMap;
-import model.UserModel
+
 public class MemoryUserDAO implements UserDAO{
 
 //    user data stored in a map that stores a User model as the value with a username as the key.
@@ -16,12 +18,12 @@ public class MemoryUserDAO implements UserDAO{
     }
 //    Empties users from the database
     @Override
-    public void clearAllUsers() throws DataAccessException {
+    public void clearAllUsers(){
         Users.clear();
     }
 
     @Override
     public UserModel getUser(String username) throws DataAccessException {
-        return Users.getOrDefault(username,null  );
+        return Users.get(username);
     }
 }

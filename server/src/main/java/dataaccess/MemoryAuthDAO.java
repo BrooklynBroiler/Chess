@@ -13,9 +13,12 @@ public class MemoryAuthDAO implements AuthDAO {
     public void clearAllAuth() {
         authData.clear();
     }
-    public String createAuthToken(){
-        return UUID.randomUUID().toString();
+
+//    Stores an AuthModel with the given username as the key
+    public void mapAuthToken(String username, AuthModel authModel){
+       authData.put(username, authModel);
     }
+
     public HashMap<String, AuthModel> getAuthData() {
         return authData;
     }

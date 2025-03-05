@@ -11,7 +11,7 @@ public class MemoryUserDAO implements UserDAO{
 
 //    storing the email and password of a user in a list
     @Override
-    public void createUser(String username, String password, String email) throws DataAccessException {
+    public void createUser(String username, String password, String email) {
 //        storing the username and password of a user in a user model
         UserModel newUser = new UserModel(username, password, email);
         Users.put(username, newUser);
@@ -23,7 +23,7 @@ public class MemoryUserDAO implements UserDAO{
     }
 //    Returns a user model
     @Override
-    public UserModel getUser(String username) throws DataAccessException {
+    public UserModel getUser(String username){
         return Users.get(username);
     }
 }

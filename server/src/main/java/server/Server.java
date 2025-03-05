@@ -1,18 +1,24 @@
 package server;
 
+import com.google.gson.Gson;
 import dataaccess.*;
 import exception.ResponseException;
+import model.UserModel;
 import service.ClearService;
+import service.RegisterService;
+import service.requestClasses.RegisterRequest;
 import spark.*;
 
 public class Server {
     private final ClearService clearService;
-
+    private final RegisterService registerService;
+//    constructor for Server
     public Server(){
-        UserDAO userDAO = new MemoryUserDAO();
-        GameDAO gameDAO = new MemoryGameDAO();
         AuthDAO authDAO = new MemoryAuthDAO();
+        GameDAO gameDAO = new MemoryGameDAO();
+        UserDAO userDAO = new MemoryUserDAO();
         this.clearService = new ClearService(userDAO, gameDAO, authDAO);
+        this.registerService = new RegisterService(authDAO, userDAO);
     }
     public int run(int desiredPort) {
         Spark.port(desiredPort);
@@ -23,6 +29,7 @@ public class Server {
 
         //This line initializes the server and can be removed once you have a functioning endpoint
         Spark.init();
+        Spark.post("/user", this::registerUser);
         Spark.delete("/db",this::clearAllData);
         Spark.awaitInitialization();
         return Spark.port();
@@ -33,8 +40,21 @@ public class Server {
         Spark.stop();
         Spark.awaitStop();
     }
+    private Object registerUser(Request req, Response res){
+        var serializer = new Gson();
+        var newUser = serializer.fromJson(req.body(),RegisterRequest.class);
+        if (registerService.getUser(newUser.username()) == null){
+            registerService.createUser(newUser.username(), newUser.password(), newUser.email());
+        }
+        String authToken = registerService.createAuthData(newUser.username());
+        String jsonAuthToken = serializer.toJson(authToken);
+        String jsonUsername = serializer.toJson(newUser.username());
+        res.status(200);
+        return STR."\{jsonUsername}:\{jsonAuthToken}";
+
+    }
     private Object clearAllData(Request req, Response res) throws ResponseException {
-        this.clearService.clear();
+        clearService.clear();
         res.status(200);
         return "";
     }

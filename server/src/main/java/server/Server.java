@@ -7,6 +7,7 @@ import model.UserModel;
 import service.ClearService;
 import service.RegisterService;
 import service.requestClasses.RegisterRequest;
+import service.resultClasses.RegisterResult;
 import spark.*;
 
 public class Server {
@@ -47,10 +48,10 @@ public class Server {
             registerService.createUser(newUser.username(), newUser.password(), newUser.email());
         }
         String authToken = registerService.createAuthData(newUser.username());
-        String jsonAuthToken = serializer.toJson(authToken);
-        String jsonUsername = serializer.toJson(newUser.username());
+        RegisterResult registerResult = new RegisterResult(newUser.username(), authToken);
+        var jsonRegisterResult = serializer.toJson(registerResult);
         res.status(200);
-        return STR."\{jsonUsername}:\{jsonAuthToken}";
+        return jsonRegisterResult;
 
     }
     private Object clearAllData(Request req, Response res) throws ResponseException {

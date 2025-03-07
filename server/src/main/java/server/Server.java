@@ -5,9 +5,11 @@ import dataaccess.*;
 import exception.ResponseException;
 import service.*;
 import service.requestClasses.CreateGameRequest;
+import service.requestClasses.JoinGameRequest;
 import service.requestClasses.LoginRequest;
 import service.requestClasses.RegisterRequest;
 import service.resultClasses.CreateGameResult;
+import service.resultClasses.ListGameResult;
 import service.resultClasses.LoginResult;
 import service.resultClasses.RegisterResult;
 import spark.*;
@@ -18,6 +20,8 @@ public class Server {
     private final LoginService loginService;
     private final LogoutService logoutService;
     private final CreateGameService createGameService;
+    private final ListGamesService listGamesService;
+    private final JoinGameService joinGameService;
 //    constructor for Server
     public Server(){
         AuthDAO authDAO = new MemoryAuthDAO();
@@ -28,6 +32,8 @@ public class Server {
         this.loginService = new LoginService(authDAO, userDAO);
         this.logoutService = new LogoutService(authDAO);
         this.createGameService = new CreateGameService(authDAO, gameDAO);
+        this.listGamesService = new ListGamesService(authDAO, gameDAO);
+        this.joinGameService = new JoinGameService(gameDAO, authDAO);
     }
     public int run(int desiredPort) {
         Spark.port(desiredPort);
@@ -41,6 +47,8 @@ public class Server {
         Spark.post("/user", this::registerUser);
         Spark.post("/session", this::loginUser);
         Spark.post("/game", this::createGame);
+        Spark.get("/game", this::listGames);
+        Spark.put("/game", this::joinGame);
         Spark.delete("/session", this::logoutUser);
         Spark.delete("/db",this::clearAllData);
         Spark.awaitInitialization();
@@ -57,14 +65,18 @@ public class Server {
     private Object registerUser(Request req, Response res){
         var serializer = new Gson();
         var newUser = serializer.fromJson(req.body(),RegisterRequest.class);
-        if (registerService.getUser(newUser.username()) == null){
+        try{
             registerService.createUser(newUser.username(), newUser.password(), newUser.email());
+            String authToken = registerService.createAuthData(newUser.username());
+            RegisterResult registerResult = new RegisterResult(newUser.username(), authToken);
+            var jsonRegisterResult = serializer.toJson(registerResult);
+            res.status(200);
+            return jsonRegisterResult;
         }
-        String authToken = registerService.createAuthData(newUser.username());
-        RegisterResult registerResult = new RegisterResult(newUser.username(), authToken);
-        var jsonRegisterResult = serializer.toJson(registerResult);
-        res.status(200);
-        return jsonRegisterResult;
+        catch(ResponseException e){
+            res.status(e.getStatusCode());
+            return e.getMessage();
+        }
     }
 
 //    Handler method for the Login endpoint
@@ -90,13 +102,35 @@ public class Server {
         int gameID;
         var serializer = new Gson();
         var game = serializer.fromJson(req.body(), CreateGameRequest.class);
-        var authToken = req.headers("authorizaton");
+        var authToken = req.headers("authorization");
         gameID = createGameService.createGame(game.gameName());
         CreateGameResult createGameResult = new CreateGameResult(gameID);
         var jsonCreateGameResult = serializer.toJson(createGameResult);
         res.status(200);
         return jsonCreateGameResult;
 
+    }
+
+//    Handler method for list games endpoint
+    private Object listGames(Request req, Response res){
+        var serializer = new Gson();
+        var authToken = req.headers("authorization");
+        ListGameResult listGameResult = new ListGameResult(listGamesService.listGames());
+        res.status(200);
+        return serializer.toJson(listGameResult);
+    }
+
+//    Handler method for join game endpoint
+    private Object joinGame(Request req, Response res){
+        var serializer = new Gson();
+        var authToken = req.headers("authorization");
+        var player = serializer.fromJson(req.body(), JoinGameRequest.class);
+        if (joinGameService.getUsername(authToken) !=null){
+            joinGameService.joinGame(joinGameService.getUsername(authToken),player.gameID(), player.playerColor());
+            res.status(200);
+            return "";
+        }
+        return "";
     }
 //    Handler method for the clear endpoint
     private Object clearAllData(Request req, Response res) throws ResponseException {

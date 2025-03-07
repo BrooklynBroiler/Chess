@@ -2,7 +2,7 @@ package exception;
 
 public class ResponseException extends Exception {
     final private int statusCode;
-    ResponseException(int statusCode, String message){
+    public ResponseException(int statusCode, String message){
         super(message);
         this.statusCode = statusCode;
     }
@@ -10,4 +10,5 @@ public class ResponseException extends Exception {
     public int getStatusCode() {
         return statusCode;
     }
+
 }

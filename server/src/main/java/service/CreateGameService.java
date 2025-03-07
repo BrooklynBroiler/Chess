@@ -10,9 +10,9 @@ public class CreateGameService {
         this.gameDAO = gameDAO;
         this.authDAO = authDAO;
     }
-//    returns True if user has authorization
-    public boolean checkAuth(String authToken){
-        return authDAO.checkAuthToken(authToken);
+//    returns username if user has authorization and null if there is no authorization
+    public String checkAuth(String authToken){
+        return authDAO.getUsernameOfAuthToken(authToken);
     }
 
     public int createGame(String gameName){

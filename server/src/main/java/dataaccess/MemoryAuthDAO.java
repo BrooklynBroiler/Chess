@@ -26,14 +26,14 @@ public class MemoryAuthDAO implements AuthDAO {
     public void mapAuthToken(String username, AuthModel authModel){
        authData.put(username, authModel);
     }
-// returns True if user has authorization, returns false if not
+// returns the username if user has authorization, and returns null if there is no authorization
     @Override
-    public boolean checkAuthToken(String authToken) {
+    public String getUsernameOfAuthToken(String authToken) {
         for(String username : authData.keySet())
             if (authData.get(username) != null && authData.get(username).authToken().equals(authToken)){
-                return true;
+                return username;
             }
-        return false;
+        return null;
     }
 
     public HashMap<String, AuthModel> getAuthData() {

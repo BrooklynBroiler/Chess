@@ -7,5 +7,5 @@ public interface AuthDAO {
     //    Removes AuthModel from DataBase
     void deleteAuthToken(String authToken);
     void mapAuthToken(String username, AuthModel authModel);
-    boolean checkAuthToken(String authToken);
+    String getUsernameOfAuthToken(String authToken);
 }

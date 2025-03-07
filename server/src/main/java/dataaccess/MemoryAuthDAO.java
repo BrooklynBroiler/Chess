@@ -1,5 +1,6 @@
 package dataaccess;
 
+import exception.ResponseException;
 import model.AuthModel;
 
 import java.util.HashMap;
@@ -15,11 +16,14 @@ public class MemoryAuthDAO implements AuthDAO {
     }
 //    removes AuthModel from data base
     @Override
-    public void deleteAuthToken(String authToken){
-        for(String username : authData.keySet())
-            if (authData.get(username) != null && authData.get(username).authToken().equals(authToken)){
+    public String deleteAuthToken(String authToken)throws ResponseException{
+        for(String username : authData.keySet()) {
+            if (authData.get(username) != null && authData.get(username).authToken().equals(authToken)) {
                 authData.remove(username);
+                return username;
             }
+        }
+        return null;
     }
 
 //    Stores an AuthModel with the given username as the key
@@ -28,17 +32,15 @@ public class MemoryAuthDAO implements AuthDAO {
     }
 // returns the username if user has authorization, and returns null if there is no authorization
     @Override
-    public String getUsernameOfAuthToken(String authToken) {
+    public String getUsernameOfAuthToken(String authToken) throws ResponseException{
         for(String username : authData.keySet())
             if (authData.get(username) != null && authData.get(username).authToken().equals(authToken)){
                 return username;
             }
+//        throw new ResponseException(401, "Error: unauthorized");
         return null;
     }
 
-    public HashMap<String, AuthModel> getAuthData() {
-        return authData;
-    }
 
     @Override
     public boolean equals(Object o) {

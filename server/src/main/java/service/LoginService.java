@@ -2,6 +2,7 @@ package service;
 
 import dataaccess.AuthDAO;
 import dataaccess.UserDAO;
+import exception.ResponseException;
 import model.AuthModel;
 import model.UserModel;
 
@@ -19,8 +20,11 @@ public class LoginService {
     }
 
 //    accesses user information and return wrong password response
-    public void checkUserInfo(String username, String password) {
+    public void checkUserInfo(String username, String password) throws ResponseException {
         UserModel loginUser = userDAO.getUser(username);
+        if (loginUser == null|| !loginUser.password().equals(password)){
+            throw new ResponseException(401, "Error: unauthorized" );
+        }
     }
 //    Creates Auth Data and adds it to the database
     public String createAuthData(String username){

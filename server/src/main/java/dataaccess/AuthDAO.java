@@ -1,11 +1,12 @@
 package dataaccess;
 
+import exception.ResponseException;
 import model.AuthModel;
 
 public interface AuthDAO {
     void clearAllAuth();
     //    Removes AuthModel from DataBase
-    void deleteAuthToken(String authToken);
+    String deleteAuthToken(String authToken) throws ResponseException;
     void mapAuthToken(String username, AuthModel authModel);
-    String getUsernameOfAuthToken(String authToken);
+    String getUsernameOfAuthToken(String authToken) throws ResponseException;
 }

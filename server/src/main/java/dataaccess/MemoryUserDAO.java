@@ -14,10 +14,10 @@ public class MemoryUserDAO implements UserDAO{
     @Override
     public void createUser(String username, String password, String email) throws ResponseException{
         if (Users.containsKey(username)){
-            throw new ResponseException(403,"Already Taken");
+            throw new ResponseException(403,"Error: already taken");
         }
-        if (username == null){
-            throw new ResponseException(400, "bad_request");
+        if (username == null || password == null || email == null){
+            throw new ResponseException(400, "Error: bad request");
         }
 //        storing the username and password of a user in a user model
         UserModel newUser = new UserModel(username, password, email);

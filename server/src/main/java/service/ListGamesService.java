@@ -2,9 +2,10 @@ package service;
 
 import dataaccess.AuthDAO;
 import dataaccess.GameDAO;
+import exception.ResponseException;
 import model.GameModel;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ListGamesService {
     private final GameDAO gameDAO;
@@ -13,7 +14,10 @@ public class ListGamesService {
         this.gameDAO = gameDAO;
         this.authDAO = authDAO;
     }
-    public ArrayList<GameModel> listGames(){
+    public String checkAuth(String authToken)throws ResponseException {
+        return authDAO.getUsernameOfAuthToken(authToken);
+    }
+    public HashMap<Integer, GameModel> listGames(){
         return gameDAO.listGames();
     }
 }

@@ -2,6 +2,7 @@ package service;
 
 import dataaccess.AuthDAO;
 import dataaccess.GameDAO;
+import exception.ResponseException;
 
 public class CreateGameService {
     private final AuthDAO authDAO;
@@ -11,7 +12,10 @@ public class CreateGameService {
         this.authDAO = authDAO;
     }
 //    returns username if user has authorization and null if there is no authorization
-    public String checkAuth(String authToken){
+    public String checkAuth(String authToken) throws ResponseException {
+        if(authDAO.getUsernameOfAuthToken(authToken) == null){
+            throw new ResponseException(401, "Error: unauthorized" );
+        }
         return authDAO.getUsernameOfAuthToken(authToken);
     }
 

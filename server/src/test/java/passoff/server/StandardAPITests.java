@@ -306,6 +306,7 @@ public class StandardAPITests {
         expectedList[0] = new TestListEntry(game1.getGameID(), game1Name, null, authA.getUsername());
 
 
+
         //1 as white from B
         String game2Name = "Lonely";
         TestCreateResult game2 = serverFacade.createGame(new TestCreateRequest(game2Name), authB.getAuthToken());
@@ -321,12 +322,14 @@ public class StandardAPITests {
         expectedList[2] = new TestListEntry(game3.getGameID(), game3Name, authC.getUsername(), authA.getUsername());
 
 
+
         //C play self
         String game4Name = "All by myself";
         TestCreateResult game4 = serverFacade.createGame(new TestCreateRequest(game4Name), authC.getAuthToken());
         serverFacade.joinPlayer(new TestJoinRequest(ChessGame.TeamColor.WHITE, game4.getGameID()), authC.getAuthToken());
         serverFacade.joinPlayer(new TestJoinRequest(ChessGame.TeamColor.BLACK, game4.getGameID()), authC.getAuthToken());
         expectedList[3] = new TestListEntry(game4.getGameID(), game4Name, authC.getUsername(), authC.getUsername());
+
 
 
         //list games

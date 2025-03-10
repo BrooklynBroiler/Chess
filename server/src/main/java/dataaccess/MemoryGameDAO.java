@@ -38,26 +38,28 @@ public class MemoryGameDAO implements GameDAO{
 
 //    Returns a list of all the games in the database
     public HashMap<Integer, GameModel> listGames(){
-//        ArrayList<GameModel> listOfGames = new ArrayList<>();
-//        for(Integer gameID : gamesData.keySet())
-//            if (gamesData.get(gameID) != null){
-//                listOfGames.add(gamesData.get(gameID));
-//            }
-//        return listOfGames;
         return gamesData;
     }
 
 //    Functionality of joining a game
     @Override
-    public void joinGame( String username, String playerColor, int gameID) throws ResponseException{
+    public void joinGame( String username, String playerColor, Integer gameID) throws ResponseException{
+
+        if (gameID == null){
+            throw new ResponseException(400, "Error: bad request");
+        }
+
         GameModel gameToJoin = gamesData.get(gameID);
+        if (gameToJoin == null){
+            throw new ResponseException(500, "Error: game to join is null");
+        }
         if (playerColor.equals("WHITE") && gameToJoin.whiteUsername() == null){
-            GameModel whiteJoin = new GameModel(gameID, username, gameToJoin.blackUsername(), gameToJoin.gameName(), gameToJoin.game());
-            gamesData.put(gameID, whiteJoin);
+            GameModel whiteJoin = new GameModel(gameToJoin.gameID(), username, gameToJoin.blackUsername(), gameToJoin.gameName(), gameToJoin.game());
+            gamesData.put(gameToJoin.gameID(), whiteJoin);
         }
         else if ( playerColor.equals("BLACK") && gameToJoin.blackUsername() == null){
-            GameModel blackJoin = new GameModel(gameToJoin.id(), gameToJoin.whiteUsername(), username, gameToJoin.gameName(), gameToJoin.game());
-            gamesData.put(gameID, blackJoin);
+            GameModel blackJoin = new GameModel(gameToJoin.gameID(), gameToJoin.whiteUsername(), username, gameToJoin.gameName(), gameToJoin.game());
+            gamesData.put(gameToJoin.gameID(), blackJoin);
         }
         else{
             throw new ResponseException(403, "Error: already taken");

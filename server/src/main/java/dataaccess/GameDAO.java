@@ -10,5 +10,5 @@ public interface GameDAO {
         HashMap<Integer, GameModel> getGameData();
         int createGame(String gameName);
         HashMap<Integer, GameModel> listGames();
-        void joinGame( String username, String playerColor, int gameID) throws ResponseException;
+        void joinGame( String username, String playerColor, Integer gameID) throws ResponseException;
 }

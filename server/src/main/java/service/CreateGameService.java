@@ -14,7 +14,7 @@ public class CreateGameService {
 //    returns username if user has authorization and null if there is no authorization
     public String checkAuth(String authToken) throws ResponseException {
         if(authDAO.getUsernameOfAuthToken(authToken) == null){
-            throw new ResponseException(401, "Error: unauthorized" );
+            throw new ResponseException(401, "Error: unauthorized");
         }
         return authDAO.getUsernameOfAuthToken(authToken);
     }

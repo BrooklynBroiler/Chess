@@ -33,4 +33,9 @@ public class MemoryUserDAO implements UserDAO{
     public UserModel getUser(String username){
         return Users.get(username);
     }
+//    returns the map of user data
+    @Override
+    public HashMap<String, UserModel> getUserData() {
+        return Users;
+    }
 }

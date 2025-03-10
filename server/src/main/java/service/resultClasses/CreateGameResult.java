@@ -1,4 +1,4 @@
 package service.resultClasses;
 
-public record CreateGameResult(int gameID) {
+public record CreateGameResult(Integer gameID) {
 }

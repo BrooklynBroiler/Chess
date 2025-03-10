@@ -23,7 +23,7 @@ public class LoginService {
     public void checkUserInfo(String username, String password) throws ResponseException {
         UserModel loginUser = userDAO.getUser(username);
         if (loginUser == null|| !loginUser.password().equals(password)){
-            throw new ResponseException(401, "Error: unauthorized" );
+            throw new ResponseException(401, "Error: unauthorized");
         }
     }
 //    Creates Auth Data and adds it to the database

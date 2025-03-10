@@ -17,7 +17,7 @@ public class JoinGameService {
         }
         return authDAO.getUsernameOfAuthToken(authToken);
     }
-    public void joinGame(String username, int gameId, String playerColor)throws ResponseException{
+    public void joinGame(String username, Integer gameId, String playerColor)throws ResponseException{
         gameDAO.joinGame(username, playerColor, gameId);
     }
 }
